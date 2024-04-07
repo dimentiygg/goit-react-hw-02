@@ -19,7 +19,7 @@ export default function App() {
   const updateFeedback = feedbackType => {
     setFeedback({
       ...feedback,
-      [feedbackType]: (feedback[feedbackType] += 1),
+      [feedbackType]: feedback[feedbackType] + 1,
     });
   };
 
@@ -36,6 +36,7 @@ export default function App() {
   }, [feedback]);
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const percPositive = Math.round((feedback.good / totalFeedback) * 100);
 
   return (
     <>
@@ -46,7 +47,11 @@ export default function App() {
         resetFeedback={resetFeedback}
       />
       {totalFeedback > 0 ? (
-        <Feedback value={feedback} totalFeedback={totalFeedback} />
+        <Feedback
+          value={feedback}
+          totalFeedback={totalFeedback}
+          percPositive={percPositive}
+        />
       ) : (
         <Notification />
       )}
